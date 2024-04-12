@@ -1,0 +1,11 @@
+.listItems{
+    padding: 21px 32px;
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap:37px;
+    background-color: #FFFFFF;
+}

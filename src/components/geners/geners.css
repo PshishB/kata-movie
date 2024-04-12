@@ -1,0 +1,15 @@
+.listItem__geners{
+    display: flex;
+    gap: 8px;
+    overflow: auto;
+}
+.listItem__geners::-webkit-scrollbar {
+    display: none;
+}
+.listItem__genersItem{
+    background-color: #FAFAFA;
+    border: #D9D9D9 1px solid;
+    padding: 2px 3px 3px 5px; 
+    border-radius: 2px;
+    white-space:nowrap;
+}

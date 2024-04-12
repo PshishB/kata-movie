@@ -1,0 +1,41 @@
+.app__list{
+    max-width: 451px;
+}
+.list_listItem {
+    display: flex;
+    align-items: center;
+    width: 451px;
+    box-shadow: 0 4px 12px 0px rgb(205, 205, 205);
+}
+.listItem__img{
+    width: 183px;
+    height: 281px;
+}
+.listItem__right{
+    display: flex;
+    flex-direction: column;
+    gap:4px;
+    width: 260px;
+    padding: 10px 20px;
+}
+.listItem__h2{
+    font-size: 20px;
+    line-height: 28px;
+}
+.listItem__p{
+    color: #827E7E;
+    font-size: 12px;
+    line-height: 22px;
+}
+.listItem__h4{
+    font-size: 12px;
+    line-height: 22px;
+}
+.listItem__h5{
+    font-size: 12px;
+    background-color: #FAFAFA;
+    border: solid 1px #D9D9D9;
+}
+.listItem__geners{
+    display: flex;
+}
