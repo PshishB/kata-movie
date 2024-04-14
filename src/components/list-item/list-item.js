@@ -11,7 +11,7 @@ const ListItem = (...itemProps) => {
 
   return (
     <div className="list_listItem listItem">
-      <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} className="listItem__img" alt="movie img"></img>
+      <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} className="listItem__img" alt="movie img"></img>
       <div className="listItem__right">
         <h2 className="listItem__h2">{title}</h2>
         <p className="listItem__p">{release_date ? format(parseISO(release_date), 'MMMM d, y') : null}</p>

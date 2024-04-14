@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Spin, Alert } from 'antd';
 
 import ListItem from '../list-item/list-item';
 import MoveApi from '../../services/moveiApi';
@@ -6,28 +7,63 @@ import MoveApi from '../../services/moveiApi';
 import './list-items.css';
 
 export default class ListItems extends Component {
-  constructor() {
-    super();
-    this.findMovies();
-  }
   state = {
     movies: null,
+    loading: true,
+    error: false,
   };
+
+  componentDidMount() {
+    const { inputValue, page } = this.props;
+    this.findMovies(inputValue, page);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { inputValue, page } = this.props;
+    if (inputValue !== prevProps.inputValue || page !== prevProps.page) {
+      this.findMovies(inputValue, page);
+    }
+  }
 
   moveApi = new MoveApi();
 
-  findMovies() {
-    this.moveApi.getMovies('return').then((movies) => {
-      this.setState({
-        movies: movies,
-      });
+  onEror = () => {
+    this.setState({
+      error: true,
+      loading: false,
     });
-  }
+  };
+
+  findMovies = (value, page) => {
+    this.moveApi
+      .getMovies(value, page)
+      .then(({ movies, totalPages }) => {
+        this.setState({
+          movies: movies,
+          loading: false,
+          totalPages: totalPages,
+        });
+        this.props.onLoadMovies(totalPages);
+      })
+      .catch(this.onError);
+  };
 
   render() {
-    const { movies } = this.state;
-    if (!movies) {
-      return <div key={0}>Loading...</div>;
+    const { movies, loading, error } = this.state;
+    if (loading) {
+      return (
+        <ul className="listItems">
+          <Spin className="spin" />
+        </ul>
+      );
+    }
+
+    if (error) {
+      return (
+        <ul className="listItems">
+          <Alert message="Не получилось загрузить данные" type="error" className="allert" />
+        </ul>
+      );
     }
 
     const items = movies.map((element) => {
@@ -39,6 +75,10 @@ export default class ListItems extends Component {
         </li>
       );
     });
-    return <ul className="listItems">{items}</ul>;
+    console.log(items);
+
+    const noItems =
+      items.length === 0 ? <Alert message="Нет фильмов с таким названием" type="error" className="allert" /> : items;
+    return <ul className="listItems">{noItems}</ul>;
   }
 }

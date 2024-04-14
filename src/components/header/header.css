@@ -1,0 +1,12 @@
+.app__header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.header__btn{
+    padding: 19px 8px 10px 8px;
+    border: none;
+    border-bottom: 1px solid #a6a6a6;
+    background-color: inherit;
+}
