@@ -10,7 +10,6 @@ export default class MoveApi {
     const t = await res.json();
     const totalPages = t['total_pages'];
     const body = t.results;
-    console.log(totalPages);
     return { body, totalPages };
   }
 
@@ -25,5 +24,47 @@ export default class MoveApi {
     }
     const data = await res.json();
     return data.genres;
+  }
+
+  async getGuestId() {
+    const id = await fetch(
+      'https://api.themoviedb.org/3/authentication/guest_session/new?api_key=8fba1a7479e07c417364714cf3baa6c1'
+    );
+    const res = await id.json();
+    return res.guest_session_id;
+  }
+
+  async postRate(id, value, movieId) {
+    const url =
+      'https://api.themoviedb.org/3/movie/' +
+      movieId +
+      '/rating?api_key=8fba1a7479e07c417364714cf3baa6c1&guest_session_id=' +
+      id;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        movieId,
+        value,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add rating');
+    }
+    return await response.json();
+  }
+
+  async getRated(id, page = 1) {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/guest_session/${id}/rated/movies?page=${page}&api_key=8fba1a7479e07c417364714cf3baa6c1`
+    );
+    const data = await response.json();
+    console.log(data);
+    return {
+      movies: data.results,
+      total_results: data.total_results,
+    };
   }
 }

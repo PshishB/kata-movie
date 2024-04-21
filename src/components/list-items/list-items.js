@@ -8,7 +8,7 @@ import './list-items.css';
 
 export default class ListItems extends Component {
   state = {
-    movies: null,
+    movies: [],
     loading: true,
     error: false,
   };
@@ -32,6 +32,21 @@ export default class ListItems extends Component {
       error: true,
       loading: false,
     });
+  };
+
+  onRateUpdate = (movieId, value) => {
+    this.setState((prevState) => ({
+      movies: prevState.movies.map((movie) => {
+        if (movie.id === movieId) {
+          return {
+            ...movie,
+            rating: value,
+          };
+        } else {
+          return movie;
+        }
+      }),
+    }));
   };
 
   findMovies = (value, page) => {
@@ -71,11 +86,10 @@ export default class ListItems extends Component {
 
       return (
         <li key={id} className="app__list list">
-          <ListItem {...itemProps} />
+          <ListItem {...itemProps} id={id} guestId={this.props.guestId} onRateUpdate={this.onRateUpdate} />
         </li>
       );
     });
-    console.log(items);
 
     const noItems =
       items.length === 0 ? <Alert message="Нет фильмов с таким названием" type="error" className="allert" /> : items;

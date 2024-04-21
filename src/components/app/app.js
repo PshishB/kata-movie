@@ -1,45 +1,39 @@
 import React, { Component } from 'react';
 
-import ListItems from '../list-items';
 import './app.css';
 import Header from '../header/header';
-import InputMovie from '../input';
-import PaginationMovie from '../pagination';
+import MoveApi from '../../services/moveiApi';
+import SearchMovie from '../search';
+import RatedMovie from '../rated';
 
 export default class App extends Component {
   state = {
-    inputValue: null,
-    page: 1,
-    moviesQuantity: null,
+    guestId: null,
+    tab: 'Search',
   };
+  moveApi = new MoveApi();
 
-  onLoadMovies = (quantity) => {
-    this.setState({
-      moviesQuantity: Math.floor(quantity * 20),
-    });
-  };
-
-  onInputValue = (value) => {
-    if (value) {
+  componentDidMount() {
+    this.moveApi.getGuestId().then((guestId) => {
       this.setState({
-        inputValue: value,
+        guestId,
       });
-    }
-  };
+    });
+  }
 
-  onPaginationChange = (page) => {
+  onHeaderClick = (value) => {
     this.setState({
-      page,
+      tab: value,
     });
   };
+
   render() {
-    const { page, inputValue, moviesQuantity } = this.state;
+    console.log(this.state.tab);
+    const ShowContent = this.state.tab === 'Search' ? SearchMovie : RatedMovie;
     return (
       <div className="app">
-        <Header />
-        <InputMovie onInputValue={this.onInputValue} />
-        <ListItems inputValue={inputValue} onLoadMovies={this.onLoadMovies} page={page} />
-        <PaginationMovie onPaginationChange={this.onPaginationChange} moviesQuantity={moviesQuantity} />
+        <Header onHeaderClick={this.onHeaderClick} />
+        <ShowContent guestId={this.state.guestId} />
       </div>
     );
   }
