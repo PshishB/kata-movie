@@ -61,7 +61,6 @@ export default class MoveApi {
       `https://api.themoviedb.org/3/guest_session/${id}/rated/movies?page=${page}&api_key=8fba1a7479e07c417364714cf3baa6c1`
     );
     const data = await response.json();
-    console.log(data);
     return {
       movies: data.results,
       total_results: data.total_results,

@@ -10,7 +10,6 @@ class ListItem extends Component {
   moveApi = new MoveApi();
 
   onRate = (id, value, moveId) => {
-    console.log(id, value, moveId);
     this.moveApi.postRate(id, value, moveId);
     const ratedMovies = { ...this.props.ratedMovies };
     ratedMovies[id] = value;
