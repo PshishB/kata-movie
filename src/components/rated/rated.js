@@ -70,7 +70,13 @@ export default class RatedMovie extends Component {
 
       return (
         <li key={id} className="app__list list">
-          <ListItem {...itemProps} id={id} guestId={this.props.guestId} onRateUpdate={this.props.onRateUpdate} />
+          <ListItem
+            {...itemProps}
+            id={id}
+            guestId={this.props.guestId}
+            onRateUpdate={this.props.onRateUpdate}
+            genresData={this.props.genresData}
+          />
         </li>
       );
     });

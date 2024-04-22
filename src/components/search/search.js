@@ -18,11 +18,9 @@ export default class SearchMovie extends Component {
   };
 
   onInputValue = (value) => {
-    if (value) {
-      this.setState({
-        inputValue: value,
-      });
-    }
+    this.setState({
+      inputValue: value,
+    });
   };
 
   onPaginationChange = (page) => {
@@ -32,10 +30,20 @@ export default class SearchMovie extends Component {
   };
   render() {
     const { page, inputValue, moviesQuantity } = this.state;
+    const { guestId, genresData, onRateClick, ratedMovies } = this.props;
     return (
       <div className="app__search">
         <InputMovie onInputValue={this.onInputValue} />
-        <ListItems inputValue={inputValue} onLoadMovies={this.onLoadMovies} page={page} guestId={this.props.guestId} />
+        <ListItems
+          inputValue={inputValue}
+          onLoadMovies={this.onLoadMovies}
+          page={page}
+          guestId={guestId}
+          genresData={genresData}
+          onRateClick={onRateClick}
+          ratedMovies={ratedMovies}
+          moviesQuantity={moviesQuantity}
+        />
         <PaginationMovie onPaginationChange={this.onPaginationChange} moviesQuantity={moviesQuantity} />
       </div>
     );
